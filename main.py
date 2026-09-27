@@ -169,6 +169,10 @@ async def ws_listener():
                     data = json.loads(message)
                     code = data.get("code")
                     logger.info(f"データを受信しました (Code: {code})")
+
+                    if code == 551:
+                        logger.warning("【テスト発火】551を受信したため、強制的にシャットダウンシーケンスを起動します！")
+                        asyncio.create_task(emergency_shutdown_sequence())
                     if data.get("code") == 556:
                         await process_eew(data)
         except websockets.ConnectionClosed:
