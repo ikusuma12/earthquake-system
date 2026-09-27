@@ -19,7 +19,7 @@ THRESHOLD_SCALE = 10 # 45 = 5弱
 # 千葉市の自宅環境を想定した地域指定
 # TARGET_REGIONS = ["千葉県", "千葉県北西部", "千葉県北東部", "千葉県南部"]
 
-TARGET_REGIONS = ["千葉県", "千葉県北西部", "千葉県北東部", "千葉県南部"]
+TARGET_REGIONS = []
 
 # ミニPC上で稼働している自作APIのエンドポイント
 API_URL_MACHINE_LIST = "http://192.168.0.240:9000/api/machine/list"
