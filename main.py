@@ -10,7 +10,7 @@ import aiohttp  # APIリクエスト用に追加
 # 常時シャットダウン対象（メインPCやNASなど、固定IPの機器）
 
 #本番URL
-WS_URL = "wss://api.p2pquake.net/v2/ws"
+# WS_URL = "wss://api.p2pquake.net/v2/ws"
 
 #サンドボックス
 WS_URL = "wss://api-realtime-sandbox.p2pquake.net/v2/ws"
