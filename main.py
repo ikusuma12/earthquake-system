@@ -10,16 +10,16 @@ import aiohttp  # APIリクエスト用に追加
 # 常時シャットダウン対象（メインPCやNASなど、固定IPの機器）
 
 #本番URL
-# WS_URL = "wss://api.p2pquake.net/v2/ws"
+WS_URL = "wss://api.p2pquake.net/v2/ws"
 
 #サンドボックス
-WS_URL = "wss://api-realtime-sandbox.p2pquake.net/v2/ws"
-THRESHOLD_SCALE = 10 # 45 = 5弱
+# WS_URL = "wss://api-realtime-sandbox.p2pquake.net/v2/ws"
+THRESHOLD_SCALE = 45 # 45 = 5弱
 
 # 千葉市の自宅環境を想定した地域指定
-# TARGET_REGIONS = ["千葉県", "千葉県北西部", "千葉県北東部", "千葉県南部"]
+TARGET_REGIONS = ["千葉県", "千葉県北西部", "千葉県北東部", "千葉県南部"]
 
-TARGET_REGIONS = []
+# TARGET_REGIONS = []
 
 # ミニPC上で稼働している自作APIのエンドポイント
 API_URL_MACHINE_LIST = "http://192.168.0.240:9000/api/machine/list"
@@ -31,8 +31,8 @@ DEVICES_ALWAYS_KILL = [
         "port": 22,
         "user": "msy2000wada",
         "pass": "Nmgw6990",
-        # "command": "echo $PASS | sudo -S shutdown -h now"
-        "command" : "echo SSH_Test_OK"
+        "command": "echo Nmgw6990 | sudo -S shutdown -h now"
+        # "command" : "echo SSH_Test_OK"
     }
 ]
 
@@ -70,8 +70,8 @@ async def get_active_machines_configs():
                                 "port": machine.get("ssh_port", 22),
                                 "user": "msy20",
                                 "key_path": "/home/msy20minipc/.ssh/id_ed25519",
-                                # "command": "shutdown /s /t 0"
-                                "command" : "echo SSH_Test_OK"
+                                "command": "shutdown /h"
+                                # "command" : "echo SSH_Test_OK"
                             })
                     return configs
         return configs
@@ -167,12 +167,12 @@ async def ws_listener():
                 logger.info("WebSocket接続成功。データ待機中...")
                 async for message in websocket:
                     data = json.loads(message)
-                    code = data.get("code")
-                    logger.info(f"データを受信しました (Code: {code})")
+                    # code = data.get("code")
+                    # logger.info(f"データを受信しました (Code: {code})")
 
-                    if code == 551:
-                        logger.warning("【テスト発火】551を受信したため、強制的にシャットダウンシーケンスを起動します！")
-                        asyncio.create_task(emergency_shutdown_sequence())
+                    # if code == 551:
+                    #     logger.warning("【テスト発火】551を受信したため、強制的にシャットダウンシーケンスを起動します！")
+                    #     asyncio.create_task(emergency_shutdown_sequence())
                     if data.get("code") == 556:
                         await process_eew(data)
         except websockets.ConnectionClosed:
