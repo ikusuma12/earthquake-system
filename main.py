@@ -167,6 +167,7 @@ async def ws_listener():
                 logger.info("WebSocket接続成功。データ待機中...")
                 async for message in websocket:
                     data = json.loads(message)
+                    code = data.get("code")
                     logger.info(f"データを受信しました (Code: {code})")
                     if data.get("code") == 556:
                         await process_eew(data)
